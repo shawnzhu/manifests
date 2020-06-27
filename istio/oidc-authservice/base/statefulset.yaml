@@ -23,30 +23,54 @@ spec:
         - name: http-api
           containerPort: 8080
         env:
-          - name: USERID_HEADER
-            value: $(userid-header)
-          - name: USERID_PREFIX
-            value: $(userid-prefix)
-          - name: USERID_CLAIM
-            value: email
-          - name: OIDC_PROVIDER
-            value: $(oidc_provider)
-          - name: OIDC_AUTH_URL
-            value: $(oidc_auth_url)
-          - name: OIDC_SCOPES
-            value: "profile email groups"
-          - name: REDIRECT_URL
-            value: $(oidc_redirect_uri)
-          - name: SKIP_AUTH_URI
-            value: $(skip_auth_uri)
-          - name: PORT
-            value: "8080"
-          - name: CLIENT_ID
-            value: $(client_id)
-          - name: CLIENT_SECRET
-            value: $(application_secret)
-          - name: STORE_PATH
-            value: /var/lib/authservice/data.db
+        - name: USERID_HEADER
+          valueFrom:
+            configMapKeyRef:
+              name: oidc-authservice-parameters
+              key: userid-header
+        - name: USERID_PREFIX
+          valueFrom:
+            configMapKeyRef:
+              name: oidc-authservice-parameters
+              key: userid-prefix
+        - name: USERID_CLAIM
+          value: email
+        - name: OIDC_PROVIDER
+          valueFrom:
+            configMapKeyRef:
+              name: oidc-authservice-parameters
+              key: oidc_provider
+        - name: OIDC_AUTH_URL
+          valueFrom:
+            configMapKeyRef:
+              name: oidc-authservice-parameters
+              key: oidc_auth_url
+        - name: OIDC_SCOPES
+          value: "profile email groups"
+        - name: REDIRECT_URL
+          valueFrom:
+            configMapKeyRef:
+              name: oidc-authservice-parameters
+              key: oidc_redirect_uri
+        - name: SKIP_AUTH_URI
+          valueFrom:
+            configMapKeyRef:
+              name: oidc-authservice-parameters
+              key: skip_auth_uri
+        - name: PORT
+          value: "8080"
+        - name: CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: oidc-authservice-parameters
+              key: client_id
+        - name: CLIENT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: oidc-authservice-parameters
+              key: application_secret
+        - name: STORE_PATH
+          value: /var/lib/authservice/data.db
         volumeMounts:
           - name: data
             mountPath: /var/lib/authservice
