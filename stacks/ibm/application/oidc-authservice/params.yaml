@@ -1,6 +1,4 @@
 varReference:
-- path: spec/template/spec/containers/env/value
-  kind: StatefulSet
 - path: spec/filters/filterConfig/httpService/serverUri/uri
   kind: EnvoyFilter
 - path: spec/filters/filterConfig/httpService/serverUri/cluster
